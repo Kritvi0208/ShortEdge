@@ -1,0 +1,202 @@
+basePath: /
+definitions:
+  model.ShortenRequest:
+    properties:
+      custom_code:
+        description: Optional
+        type: string
+      long_url:
+        type: string
+      visibility:
+        description: public / private
+        type: string
+    type: object
+  model.URL:
+    properties:
+      code:
+        type: string
+      created_at:
+        type: string
+      long_url:
+        type: string
+      visibility:
+        description: '"public" or "private"'
+        type: string
+    type: object
+  model.Visit:
+    properties:
+      browser:
+        type: string
+      code:
+        type: string
+      country:
+        type: string
+      device:
+        type: string
+      ip:
+        type: string
+      timestamp:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    name: Ritvi K
+  description: API documentation for URLify service
+  title: URLify - Branded URL Shortener with Insights
+  version: "1.0"
+paths:
+  /{code}:
+    get:
+      description: Redirects using the short code and logs analytics
+      parameters:
+      - description: Short code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirects to long URL
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Redirect to the original long URL
+      tags:
+      - Redirect
+  /all:
+    get:
+      description: Fetch all shortened URLs
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.URL'
+            type: array
+      summary: Get all URLs
+      tags:
+      - URL
+  /analytics/{code}:
+    get:
+      description: Fetch real-time visit logs for a short link
+      parameters:
+      - description: Short code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Visit'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get analytics for a short URL
+      tags:
+      - Analytics
+  /delete/{code}:
+    delete:
+      description: Delete a short link by its code
+      parameters:
+      - description: Short code
+        in: path
+        name: code
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete a short URL
+      tags:
+      - URL
+  /shorten:
+    post:
+      consumes:
+      - application/json
+      description: Generates a branded short URL
+      parameters:
+      - description: URL details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.ShortenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.URL'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Shorten a long URL
+      tags:
+      - URL
+  /update/{code}:
+    put:
+      consumes:
+      - application/json
+      description: Modify long URL or visibility of a short URL
+      parameters:
+      - description: Short code
+        in: path
+        name: code
+        required: true
+        type: string
+      - description: Updated URL details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.ShortenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.URL'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Update a short URL
+      tags:
+      - URL
+swagger: "2.0"

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Urlify - URL Shortener</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="token.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>🔗 Urlify</h1>
+      <nav>
+        <ul>
+          <li><a href="#" onclick="showSection('shorten')">Shorten URL</a></li>
+          <li><a href="#" onclick="showSection('myLinks')">My Links</a></li>
+          <li><a href="#" onclick="showSection('analytics')">Analytics</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Section: Shorten URL -->
+      <section id="shorten" class="active">
+        <h2>Create Short Link</h2>
+        <form id="shortenForm">
+          <label>Long URL:</label>
+          <input type="url" id="longURL" required />
+
+          <label>Custom Code (optional):</label>
+          <input type="text" id="customCode" />
+
+          <label>Visibility:</label>
+          <select id="visibility">
+            <option value="public">Public</option>
+            <option value="private">Private</option>
+          </select>
+
+          <label>Expiry (in days):</label>
+          <input type="number" id="expiryDays" min="1" max="365" />
+
+          <button type="submit">Shorten</button>
+        </form>
+        <div id="shortenResult"></div>
+      </section>
+      <h2>🔗 Shorten Your URL</h2>
+      <form id="shorten-form">
+        <label>Original URL:</label><br />
+        <input type="url" id="original-url" required /><br />
+
+        <label>Custom Code (optional):</label><br />
+        <input type="text" id="custom-code" /><br />
+
+        <label>Expiry Date (optional):</label><br />
+        <input type="date" id="expiry-date" /><br />
+
+        <label>
+          <input type="checkbox" id="is-public" checked />
+          Public Link </label
+        ><br /><br />
+
+        <button type="submit">Shorten</button>
+      </form>
+
+      <div id="result" style="margin-top: 1rem"></div>
+
+      <!-- JS includes -->
+      <script src="token.js"></script>
+      <script src="shorten.js"></script>
+
+      <hr />
+      <h2>📋 My Short Links</h2>
+      <div id="dashboard">
+        <p>Loading your links...</p>
+      </div>
+
+      <!-- Add this script at bottom if not already there -->
+      <script src="dashboard.js"></script>
+
+      <!-- Section: My Links -->
+      <section id="myLinks">
+        <h2>My Short Links</h2>
+        <table id="linksTable">
+          <thead>
+            <tr>
+              <th>Short Code</th>
+              <th>Long URL</th>
+              <th>Visibility</th>
+              <th>Created</th>
+              <th>Expires</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <!-- Section: Analytics -->
+      <section id="analytics">
+        <h2>Analytics</h2>
+        <div id="analyticsContent">
+          <p>Select a short link from "My Links" to view analytics.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Urlify | Made with ❤️ for GoFr SoC</p>
+    </footer>
+
+    <script src="token.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

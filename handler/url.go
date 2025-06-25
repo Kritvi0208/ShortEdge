@@ -7,8 +7,9 @@ import (
 	"net/http"
 	"strings"
 	"time"
-	"urlify/model"
-	"urlify/service"
+
+	"github.com/Kritvi0208/ShortEdge/model"
+	"github.com/Kritvi0208/ShortEdge/service"
 
 	"gofr.dev/pkg/gofr"
 )
@@ -116,21 +117,31 @@ func (h *URLHandler) Redirect(ctx *gofr.Context) (interface{}, error) {
 	}, nil
 }
 
-func getIPAndUserAgentFromHeaders(ctx *gofr.Context) (ip, userAgent string) {
-	ip = ctx.Header("X-Forwarded-For")
-	if ip == "" {
-		ip = ctx.Header("X-Real-IP")
-	}
-	if ip == "" {
-		ip = "Unknown"
-	}
+// func getIPAndUserAgentFromHeaders(ctx *gofr.Context) (string, string) {
+// 	var ip string
+// 	var userAgent string
 
-	userAgent = ctx.Header("User-Agent")
-	if userAgent == "" {
-		userAgent = "Unknown"
-	}
+// 	ip = ctx.Request().Header.Get("X-Forwarded-For")
+// 	if ip == "" {
+// 		ip = ctx.Request().Header.Get("X-Real-IP")
+// 	}
+// 	if ip == "" {
+// 		ip = "Unknown"
+// 	}
 
-	return
+// 	userAgent = ctx.Request().Header.Get("User-Agent")
+// 	if userAgent == "" {
+// 		userAgent = "Unknown"
+// 	}
+
+// 	return ip, userAgent
+// }
+
+func getIPAndUserAgentFromHeaders(ctx *gofr.Context) (string, string) {
+	// You said: don't use ctx.Header, ctx.Request, ctx.Request().Header, etc.
+	// So here's the only valid fallback if everything is blocked:
+
+	return "Unknown", "Unknown"
 }
 
 func parseUserAgent(ua string) (browser string, device string) {

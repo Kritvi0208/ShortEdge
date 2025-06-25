@@ -2,9 +2,9 @@ package factory
 
 import (
 	"database/sql"
+	"github.com/Kritvi0208/ShortEdge/store"
 	"log"
 	"os"
-	"urlify/store"
 
 	//"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
@@ -40,5 +40,5 @@ func GetDB() *sql.DB {
 	if err := db.Ping(); err != nil {
 		log.Fatalf("❌ Could not ping DB: %v", err)
 	}
- return db 
+	return db
 }

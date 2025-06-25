@@ -2,15 +2,14 @@ package service
 
 import (
 	"context"
-	"urlify/model"
-	"urlify/store"
+	"github.com/Kritvi0208/ShortEdge/model"
+	"github.com/Kritvi0208/ShortEdge/store"
 )
 
 type VisitService interface {
 	GetAnalytics(ctx context.Context, code string) ([]model.Visit, error)
 	LogVisit(ctx context.Context, visit model.Visit) error
 }
-
 
 type visitService struct {
 	store store.Visit

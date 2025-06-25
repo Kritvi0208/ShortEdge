@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"urlify/service"
+	"github.com/Kritvi0208/ShortEdge/service"
 
 	"gofr.dev/pkg/gofr"
 )
@@ -24,10 +24,10 @@ func NewVisitHandler(s service.VisitService) *VisitHandler {
 // @Failure 400 {object} map[string]string
 // @Router /analytics/{code} [get]
 func (h *VisitHandler) GetAnalytics(ctx *gofr.Context) (interface{}, error) {
-    code := ctx.PathParam("code")
-    visits, err := h.service.GetAnalytics(ctx.Context, code)
-    if err != nil {
-        return nil, err
-    }
-    return visits, nil
+	code := ctx.PathParam("code")
+	visits, err := h.service.GetAnalytics(ctx.Context, code)
+	if err != nil {
+		return nil, err
+	}
+	return visits, nil
 }

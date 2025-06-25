@@ -3,7 +3,7 @@ package store
 import (
 	"context"
 	"database/sql"
-	"urlify/model"
+	"github.com/Kritvi0208/ShortEdge/model"
 )
 
 type URL interface {
@@ -29,9 +29,8 @@ func (s *urlStore) Create(ctx context.Context, url model.URL) error {
 	return err
 }
 
-
 func (s *urlStore) GetAll(ctx context.Context) ([]model.URL, error) {
-rows, err := s.db.QueryContext(ctx, `SELECT code, long_url, created_at, visibility, expires_at FROM urls`)
+	rows, err := s.db.QueryContext(ctx, `SELECT code, long_url, created_at, visibility, expires_at FROM urls`)
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +39,7 @@ rows, err := s.db.QueryContext(ctx, `SELECT code, long_url, created_at, visibili
 	var urls []model.URL
 	for rows.Next() {
 		var u model.URL
-err = rows.Scan(&u.Code, &u.LongURL, &u.CreatedAt, &u.Visibility, &u.ExpiresAt)
+		err = rows.Scan(&u.Code, &u.LongURL, &u.CreatedAt, &u.Visibility, &u.ExpiresAt)
 		if err != nil {
 			return nil, err
 		}
@@ -52,8 +51,8 @@ err = rows.Scan(&u.Code, &u.LongURL, &u.CreatedAt, &u.Visibility, &u.ExpiresAt)
 func (s *urlStore) GetByCode(ctx context.Context, code string) (model.URL, error) {
 	var u model.URL
 	err := s.db.QueryRowContext(ctx,
-	`SELECT code, long_url, created_at, visibility, expires_at FROM urls WHERE code = $1`, code).
-	Scan(&u.Code, &u.LongURL, &u.CreatedAt, &u.Visibility, &u.ExpiresAt)
+		`SELECT code, long_url, created_at, visibility, expires_at FROM urls WHERE code = $1`, code).
+		Scan(&u.Code, &u.LongURL, &u.CreatedAt, &u.Visibility, &u.ExpiresAt)
 
 	return u, err
 }

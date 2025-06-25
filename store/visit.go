@@ -3,7 +3,7 @@ package store
 import (
 	"context"
 	"database/sql"
-	"urlify/model"
+	"github.com/Kritvi0208/ShortEdge/model"
 )
 
 type Visit interface {

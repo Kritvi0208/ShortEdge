@@ -3,11 +3,11 @@ package service
 import (
 	"context"
 	"fmt"
+	"github.com/Kritvi0208/ShortEdge/model"
+	"github.com/Kritvi0208/ShortEdge/store"
+	"math/rand"
 	"strings"
 	"time"
-	"urlify/model"
-	"urlify/store"
-	"math/rand"
 )
 
 type URLService interface {
@@ -23,9 +23,8 @@ type urlService struct {
 }
 
 func init() {
-    rand.Seed(time.Now().UnixNano())
+	rand.Seed(time.Now().UnixNano())
 }
-
 
 func New(s store.URL) URLService {
 	return &urlService{store: s}
@@ -51,8 +50,6 @@ func (u *urlService) GetAll(ctx context.Context) ([]model.URL, error) {
 
 	return valid, nil
 }
-
-
 
 func (u *urlService) Shorten(ctx context.Context, req model.ShortenRequest) (model.URL, error) {
 	// Validation
@@ -92,14 +89,13 @@ func (u *urlService) Shorten(ctx context.Context, req model.ShortenRequest) (mod
 	if visibility != "private" {
 		visibility = "public"
 	}
-link := model.URL{
-	Code:       code,
-	LongURL:    req.LongURL,
-	Visibility: visibility,
-	CreatedAt:  time.Now(),
-	ExpiresAt:  req.ExpiresAt, // ⏳
-}
-
+	link := model.URL{
+		Code:       code,
+		LongURL:    req.LongURL,
+		Visibility: visibility,
+		CreatedAt:  time.Now(),
+		ExpiresAt:  req.ExpiresAt, // ⏳
+	}
 
 	err := u.store.Create(ctx, link)
 	return link, err

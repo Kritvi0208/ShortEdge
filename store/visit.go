@@ -3,6 +3,8 @@ package store
 import (
 	"context"
 	"database/sql"
+	"time"
+
 	"github.com/Kritvi0208/ShortEdge/model"
 )
 
@@ -20,15 +22,25 @@ func NewVisitStore(db *sql.DB) Visit {
 }
 
 func (s *visitStore) LogVisit(ctx context.Context, v model.Visit) error {
-	_, err := s.db.ExecContext(ctx,
-		`INSERT INTO visits (code, timestamp, ip, country, browser, device) VALUES ($1, $2, $3, $4, $5, $6)`,
-		v.Code, v.Timestamp, v.IP, v.Country, v.Browser, v.Device)
-	return err
+	result, err := s.db.ExecContext(ctx,
+		`INSERT INTO visits (code, timestamp, ip, country, browser, device)
+	 VALUES ($1, $2, $3, $4, $5, $6)`,
+		v.Code, v.Timestamp.Format(time.RFC3339), v.IP, v.Country, v.Browser, v.Device)
+
+	if err != nil {
+		println("❌ Error logging visit:", err.Error())
+		return err
+	}
+
+	rows, _ := result.RowsAffected()
+	println("✅ Visit logged. Rows affected:", rows)
+
+	return nil
 }
 
 func (s *visitStore) GetAnalytics(ctx context.Context, code string) ([]model.Visit, error) {
 	rows, err := s.db.QueryContext(ctx,
-		`SELECT timestamp, ip, country, browser, device FROM visits WHERE code = $1`, code)
+		`SELECT timestamp, ip, country, browser, device FROM visits WHERE url_id = $1`, code)
 	if err != nil {
 		return nil, err
 	}

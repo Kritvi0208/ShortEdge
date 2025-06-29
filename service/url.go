@@ -94,7 +94,7 @@ func (u *urlService) Shorten(ctx context.Context, req model.ShortenRequest) (mod
 		LongURL:    req.LongURL,
 		Visibility: visibility,
 		CreatedAt:  time.Now(),
-		ExpiresAt:  req.ExpiresAt, // ⏳
+		ExpiresAt:  req.ExpiresAt, 
 	}
 
 	err := u.store.Create(ctx, link)

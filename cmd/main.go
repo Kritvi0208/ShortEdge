@@ -10,7 +10,7 @@ import (
 	"log"
 	"os"
 
-	_ "github.com/Kritvi0208/ShortEdge/docs" // 🔥 auto-generated docs will go here
+	_ "github.com/Kritvi0208/ShortEdge/docs" 
 	"github.com/Kritvi0208/ShortEdge/factory"
 	"github.com/Kritvi0208/ShortEdge/handler"
 	"github.com/Kritvi0208/ShortEdge/middleware"
@@ -29,7 +29,7 @@ func main() {
 	}
 
 	log.Println("✅ DB_URL from .env is:", os.Getenv("DB_URL")) // debug print
-	// ✅ Initialize GoFr app
+	// Initialize GoFr app
 
 	//os.Setenv("GOFR_DB_URL", os.Getenv("DB_URL"))
 

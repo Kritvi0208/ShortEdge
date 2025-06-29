@@ -111,7 +111,7 @@ func (h *URLHandler) Redirect(ctx *gofr.Context) (interface{}, error) {
 
 	fmt.Printf("%#v\n", ctx)
 
-	// ✅ Return redirect instruction (not auto-redirect)
+	// Return redirect instruction (not auto-redirect)
 	return map[string]interface{}{
 		"redirect": link.LongURL,
 	}, nil

@@ -7,7 +7,7 @@ import (
 
 func RedirectMiddleware(h gofr.Handler) gofr.Handler {
 	return func(ctx *gofr.Context) (interface{}, error) {
-		// Middleware logic goes here
+	
 		return h(ctx)
 	}
 }
